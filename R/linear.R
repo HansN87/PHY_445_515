@@ -178,3 +178,11 @@ for (i in 1:numit) {
    offsets[i] = result$par[1]
 }
 paste("std-deviation of offset found by simulation:",sd(offsets))
+
+# compare to analytic result
+xobs=pts_obs$x
+D = sum(xobs*xobs/stddev^2)
+B = 1/stddev^2*length(xobs)
+A = sum(xobs/stddev^2)
+err = D/(D*B-A^2)
+paste("std-deviation of offset found by analytic calculation:",sqrt(err))
