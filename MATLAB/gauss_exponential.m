@@ -1,3 +1,10 @@
+% This code illustrates how to fit a model to observations
+% using the standard chi^2 minimization technique.
+% WARNING: Here we simulate a counting experiment (poisson distribution)
+%          and thus the chi^2 technique is only valid asymptotically.
+%          For low count data one would use a maximum likelihood technique instead.
+%          This code is not optimized for speed and is meant for educational purpose only. 
+
 % define model parameters (gaussian + exponential)
 a = 1000;
 b = 0.2;
