@@ -55,7 +55,7 @@ chi2 <- function(pars) {
 }
 
 # do a numerical minimization
-result = optim(seed, chi2, gr = NULL, method = "L-BFGS-B")
+result = optim(seed, chi2, gr = NULL, method = "BFGS")
 x = seq(0,20,by=0.01)
 y = model(x, result$par)
 
@@ -141,7 +141,7 @@ minimize_stepwise <- function(mean) {
     sum((yobs-yexp)^2/yexp)-chi2(result$par)
   }
   seed = c(seed[1], seed[2], seed[3], seed[5])
-  result2 = optim(seed, delta_chi2, gr = NULL, method = "L-BFGS-B")
+  result2 = optim(seed, delta_chi2, gr = NULL, method = "BFGS")
   result2$value
 }
 
