@@ -37,7 +37,7 @@ y_errs = numpy.sqrt(y_obs)
 
 chi2 = lambda pars: numpy.sum((y_obs-model(x_pts,pars))**2/model(x_pts,pars))
 result = optimize.minimize(chi2, seed, method='Nelder-Mead')
-print "best fit is:", result.x
+print "best fit is:", result.x, "with chi2:", result.fun
 
 y_fit = model(x, result.x)
 
