@@ -7,7 +7,7 @@
 
 library(Hmisc) # provides errorbar function "errbar"
 rm(list=ls()) # clear memory
-setwd("/Users/hans/Analysis/teaching/PHY505/fitting/")
+setwd("/current/directory/")
 
 # define the model (gaussian with exponentially decaying background)
 model <- function(x, pars) {
@@ -38,7 +38,8 @@ y<-model(x, seed)
 
 # generate random numbers from poisson distribution in each "bin"
 set.seed(1, kind = NULL, normal.kind = NULL) # change seed to obtained new dataset
-yobs = rpois(length(y), y)
+#yobs = rpois(length(y), y)
+yobs = c(800, 704, 578, 458, 339, 323, 320, 311, 221, 139, 105, 87, 73, 60, 56, 46, 36, 32, 26)
 pts_obs = data.frame(
   x  = x
   , y  = yobs
@@ -79,7 +80,7 @@ with (
 # data points ...
 with (
   data = pts_obs
-  , expr = points(x, y, col="black", cex = .5,pch=21,bg="black", add=T)
+  , expr = points(x, y, col="black", cex = .5,pch=21,bg="black")
 )
 # ... and errorbars
 with (

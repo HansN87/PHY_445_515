@@ -15,29 +15,31 @@ def model(x, pars):
 	A=pars[0];
 	B=pars[1];
 	C=pars[2];
-	D=pars[3];
-	E=pars[4];
-	return A*numpy.exp(-B*x)+C*numpy.exp(-1./2.*((x-D)/E)**2)
+	mean=pars[3];
+	sigma=pars[4];
+	return A*numpy.exp(-B*x)+C*numpy.exp(-1./2.*((x-mean)/sigma)**2)
 
 # parameters
 a=1000 # exp. norm.
 b=0.2 # exp. slope
 c=100 # gauss norm
-mu=8 # peak location
+mean=8 # peak location
 sigma=1 # width
-seed = [a, b, c, mu, sigma]
+seed = [a, b, c, mean, sigma]
 
 x = numpy.arange(0, 20, 0.01)
 y = model(x, seed)
 
 x_pts = numpy.arange(1., 20., 1.0)
 y_exp = model(x_pts, seed)
-y_obs = numpy.random.poisson(y_exp)
+#y_obs = numpy.random.poisson(y_exp)
+y_obs = [800, 704, 578, 458, 339, 323, 320, 311, 221, 139, 105, 87, 73, 60, 56, 46, 36, 32, 26]
 y_errs = numpy.sqrt(y_obs)
 
 chi2 = lambda pars: numpy.sum((y_obs-model(x_pts,pars))**2/model(x_pts,pars))
 result = optimize.minimize(chi2, seed, method='Nelder-Mead')
-print "best fit is:", result.x, "with chi2:", result.fun
+chi2_min = result.fun
+print "best fit is:", result.x, "with chi2:", chi2_min
 
 y_fit = model(x, result.x)
 
@@ -53,3 +55,42 @@ ax.xaxis.set_label_coords(1.0, -0.1)
 ax.set_ylim([0, 1.e3])
 ax.legend()
 plt.savefig("fit.png")
+
+# calculate uncertainties for mean
+means = numpy.linspace(result.x[3]-0.3, result.x[3]+0.3, 100).tolist()
+chi2vals = []
+for mu in means:
+       	def chi2_rel(pars, mu=mu):		
+    		current_pars = list(pars[:3])+[mu]+list(pars[3:])		
+    		y_exp = model(x_pts, current_pars)
+    		return numpy.sum((y_obs-y_exp)**2/y_exp) - chi2_min
+    
+    	x0 = [seed[0], seed[1], seed[2], seed[4]]
+    	res = optimize.minimize(chi2_rel, x0, method='Nelder-Mead')
+	chi2vals.append(res.fun)
+
+fig = plt.figure(figsize=(7, 6), dpi=200)
+ax = plt.axes()
+ax.plot(means, chi2vals, "k-")
+ax.set_ylabel('$\\Delta\\chi^2$', position=(0., 1.), va='top', ha='right')
+ax.set_xlabel('mean [keV]', position=(1., 0.), va='bottom', ha='right')
+ax.yaxis.set_label_coords(-0.12, 1.)
+ax.xaxis.set_label_coords(1.0, -0.1)
+plt.savefig("chi2.png")
+
+# find roots numerically via interpolation
+from scipy.interpolate import InterpolatedUnivariateSpline
+spline = InterpolatedUnivariateSpline(means, numpy.asarray(chi2vals)-1.)
+roots = spline.roots()
+print "best fit:", result.x[3], "+", roots[1]-result.x[3], "-", result.x[3]-roots[0]
+
+ 
+    
+
+      
+
+
+
+
+
+
