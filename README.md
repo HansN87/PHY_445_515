@@ -10,7 +10,7 @@ BEWARE: This is wrong if bins with low number of counts (<~10) exist.
 
 The best-fit parameters are obtained numerically via minimization. 
 
-useful links:
+useful links: <br>
 https://it.stonybrook.edu/software/title/matlab <br>
 https://it.stonybrook.edu/software/title/mathematica <br>
 https://it.stonybrook.edu/software/title/python <br>
