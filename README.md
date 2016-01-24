@@ -10,4 +10,14 @@ BEWARE: This is wrong if bins with low number of counts (<~10) exist.
 
 The best-fit parameters are obtained numerically via minimization. 
 
+useful links:
+https://it.stonybrook.edu/software/title/matlab
+https://it.stonybrook.edu/software/title/mathematica
+https://it.stonybrook.edu/software/title/python
+http://www.scipy.org/about.html
+https://it.stonybrook.edu/software/title/r-project
+https://www.r-project.org
+
+
+
 
