@@ -1,7 +1,7 @@
 ## PHY 445/515 Senior Laboratory - Chi-Squared Fitting Example
 
 The code snippets provided by this repository are meant to help beginners learn non-linear fitting.
-The following languages/tools are supported: __PYTHON, R, MATLAB, Mathematica__
+Examples for the following languages/tools are given: __PYTHON, R, MATLAB, Mathematica__
 
 The toy model assumes a superposition of a gaussian component (signal) on top of an exponentially decaying component (background).
 
